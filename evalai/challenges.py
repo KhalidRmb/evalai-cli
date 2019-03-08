@@ -4,6 +4,7 @@ from click import style
 
 from evalai.utils.common import Date
 from evalai.utils.challenges import (
+    create_challenge,
     display_all_challenge_list,
     display_future_challenge_list,
     display_ongoing_challenge_list,
@@ -74,6 +75,18 @@ def challenge(ctx, challenge):
     ctx.obj = Challenge(challenge=challenge)
     if ctx.invoked_subcommand is None:
         display_challenge_details(challenge)
+
+@challenges.command(context_settings={"ignore_unknown_options": True})
+@click.option("--file", type=click.File("rb"), required=True, help="Path to the Challenge file.")
+@click.argument("team", type=int)
+def create(file, team):
+    """
+    Create challenge with Zip file & HostTeam ID.
+    """
+    """
+    Invoked by running 'evalai challenges create --file FILE TEAM'
+    """
+    create_challenge(file, team)
 
 
 @challenges.command()
