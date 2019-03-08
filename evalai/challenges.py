@@ -76,6 +76,7 @@ def challenge(ctx, challenge):
     if ctx.invoked_subcommand is None:
         display_challenge_details(challenge)
 
+
 @challenges.command(context_settings={"ignore_unknown_options": True})
 @click.option("--file", type=click.File("rb"), required=True, help="Path to the Challenge file.")
 @click.argument("team", type=int)
