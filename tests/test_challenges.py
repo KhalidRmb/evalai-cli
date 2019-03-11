@@ -981,7 +981,7 @@ class TestCreateChallenge(BaseTestClass):
         responses.add(
             responses.POST,
             url.format(API_HOST_URL, URLS.create_challenge.value).format("4"),
-            json=self.messgae,
+            json=self.message,
             status=201,
         )
 
