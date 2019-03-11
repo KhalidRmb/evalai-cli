@@ -17,6 +17,9 @@ from evalai.utils.common import (
 from tests.data import challenge_response, submission_response
 from .base import BaseTestClass
 
+from inspect import getsourcefile
+from os.path import abspath
+
 
 class TestDisplayChallenges(BaseTestClass):
     def setup(self):
@@ -1004,9 +1007,10 @@ class TestCreateChallenge(BaseTestClass):
 
         runner = CliRunner()
 
-
+        curr = abspath(getsourcefile(lambda:0))
+        file = os.join(curr,"data/test_zip_file.zip")
 
         result = runner.invoke(
-            challenges, ["create", "--file", "./tests/data/test_zip_file.zip", "4"]
+            challenges, ["create", "--file", "{}".format(file), "4"]
         )
         assert result.output.strip() == expected
