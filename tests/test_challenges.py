@@ -1010,6 +1010,6 @@ class TestCreateChallenge(BaseTestClass):
         file = os.path.join(my_path, "data")
 
         result = runner.invoke(
-            challenges, ["create", "--file", "{}test_zip_file.zip".format(file), "4"]
+            challenges, ["create", "--file", "{}/test_zip_file.zip".format(file), "4"]
         )
         assert result.output.strip() == expected
