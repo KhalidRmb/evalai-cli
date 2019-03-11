@@ -1,6 +1,8 @@
 import json
 import responses
 
+import os
+
 from beautifultable import BeautifulTable
 from click.testing import CliRunner
 from datetime import datetime
@@ -16,9 +18,6 @@ from evalai.utils.common import (
 )
 from tests.data import challenge_response, submission_response
 from .base import BaseTestClass
-
-from inspect import getsourcefile
-import os
 
 
 class TestDisplayChallenges(BaseTestClass):
@@ -1008,7 +1007,7 @@ class TestCreateChallenge(BaseTestClass):
         runner = CliRunner()
 
         my_path = os.path.abspath(os.path.dirname(__file__))
-        file = os.path.join(my_path, "./data/test_zip_file.zip")
+        file = os.path.join(my_path, "data/test_zip_file.zip")
 
         result = runner.invoke(
             challenges, ["create", "--file", "{}".format(file), "4"]
