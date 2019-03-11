@@ -18,7 +18,7 @@ from tests.data import challenge_response, submission_response
 from .base import BaseTestClass
 
 from inspect import getsourcefile
-from os.path import abspath
+import os
 
 
 class TestDisplayChallenges(BaseTestClass):
