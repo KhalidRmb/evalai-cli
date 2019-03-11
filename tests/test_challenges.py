@@ -1007,8 +1007,8 @@ class TestCreateChallenge(BaseTestClass):
 
         runner = CliRunner()
 
-        curr = abspath(getsourcefile(lambda:0))
-        file = os.join(curr,"data/test_zip_file.zip")
+        my_path = os.path.abspath(os.path.dirname(__file__))
+        file = os.join(my_path,"./data/test_zip_file.zip")
 
         result = runner.invoke(
             challenges, ["create", "--file", "{}".format(file), "4"]
