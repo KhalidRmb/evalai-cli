@@ -395,6 +395,6 @@ empty_leaderboard = """
 
 create_challenge_result = """
 {
-    'success': 'Challenge Challenge Title has been created successfully and sent for review to EvalAI Admin.'
+    "success": "Challenge Challenge Title has been created successfully and sent for review to EvalAI Admin."
 }
 """
