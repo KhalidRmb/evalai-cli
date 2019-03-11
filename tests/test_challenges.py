@@ -971,3 +971,40 @@ class TestDisplaySubmissionWithoutSubmissionData(BaseTestClass):
         result = runner.invoke(challenge, ["two", "participate", "3"])
         response = result.output
         assert response == output
+
+
+class TestCreateChallenge(BaseTestClass):
+    def setup(self):
+        self.message = json.loads(challenge_response.create_challenge_result)
+
+        url = "{}{}"
+        responses.add(
+            responses.POST,
+            url.format(API_HOST_URL, URLS.create_challenge.value).format("4"),
+            json=self.messgae,
+            status=201,
+        )
+
+    @response.activate
+    def test_create_challenge_when_file_is_not_valid(self):
+        expected = (
+            "Usage: evalai challenges create [OPTIONS] TEAM\n"
+            '\nError: Invalid value for "--file": Could not open file: file: No such file or directory\n'
+        )
+        runner = CliRunner()
+        result = runner.invoke(
+            challenges, ["create", "--file", "file", "4"]
+        )
+        response = result.output
+        assert response == expected
+
+    def test_create_challenge_when_file_and_id_are_valid(self):
+        expected = 'Challenge Challenge Title has been created successfully and sent for review to EvalAI Admin.'
+
+        runner = CliRunner()
+
+        result = runner.invoke(
+            challenges, ["create", "--file", ".tests/data/test_zip_file.zip", "4"]
+        )
+        assert result.exit_code == 0
+        assert result.output.strip() == expected
