@@ -985,7 +985,7 @@ class TestCreateChallenge(BaseTestClass):
             status=201,
         )
 
-    @response.activate
+    @responses.activate
     def test_create_challenge_when_file_is_not_valid(self):
         expected = (
             "Usage: evalai challenges create [OPTIONS] TEAM\n"
@@ -998,6 +998,7 @@ class TestCreateChallenge(BaseTestClass):
         response = result.output
         assert response == expected
 
+    @responses.activate
     def test_create_challenge_when_file_and_id_are_valid(self):
         expected = 'Challenge Challenge Title has been created successfully and sent for review to EvalAI Admin.'
 
@@ -1006,5 +1007,4 @@ class TestCreateChallenge(BaseTestClass):
         result = runner.invoke(
             challenges, ["create", "--file", ".tests/data/test_zip_file.zip", "4"]
         )
-        assert result.exit_code == 0
         assert result.output.strip() == expected
