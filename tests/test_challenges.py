@@ -988,7 +988,7 @@ class TestCreateChallenge(BaseTestClass):
     @responses.activate
     def test_create_challenge_when_file_is_not_valid(self):
         expected = (
-            "Usage: evalai challenges create [OPTIONS] TEAM\n"
+            "Usage: challenges create [OPTIONS] TEAM\n"
             '\nError: Invalid value for "--file": Could not open file: file: No such file or directory\n'
         )
         runner = CliRunner()
@@ -1004,7 +1004,9 @@ class TestCreateChallenge(BaseTestClass):
 
         runner = CliRunner()
 
+
+
         result = runner.invoke(
-            challenges, ["create", "--file", ".tests/data/test_zip_file.zip", "4"]
+            challenges, ["create", "--file", "./tests/data/test_zip_file.zip", "4"]
         )
         assert result.output.strip() == expected
