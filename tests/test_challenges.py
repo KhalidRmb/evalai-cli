@@ -1016,8 +1016,8 @@ class TestCreateChallenge(BaseTestClass):
 
     @responses.activate
     def test_create_challenge_when_id_is_not_valid(self):
-        expected = ("404 Client Error: Not Found for url: http://localhost:8000"
-                    "/api/challenges/challenge/challenge_host_team/111/zip_upload/")
+        expected = ("Could not establish a connection to EvalAI."
+                    " Please check the Host URL.")
 
         runner = CliRunner()
 

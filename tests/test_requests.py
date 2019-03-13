@@ -343,7 +343,7 @@ class TestCreateChallengeWhenZipFileDoesNotExist(BaseTestClass):
         expected = ("\nError: The zip file contents cannot be extracted. Please check the format!\n"
                     "\nUse `evalai challenges` to fetch the active challenges.\n"
                     "\nUse `evalai challenge CHALLENGE phases` to fetch the "
-                    "active phases.\n"
+                    "active phases.\n\n"
                     )
         runner = CliRunner()
 
