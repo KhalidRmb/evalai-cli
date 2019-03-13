@@ -1,6 +1,8 @@
 import json
 import responses
 
+import os
+
 from click.testing import CliRunner
 from requests.exceptions import RequestException
 
@@ -770,7 +772,7 @@ class TestRequestForExceptions(BaseTestClass):
         runner = CliRunner()
         my_path = os.path.abspath(os.path.dirname(__file__))
         file = os.path.join(my_path, "data")
-        result = runner.invoke(challenges, ["create", "--file", "{}/test_zip_file.zip", "4"])
+        result = runner.invoke(challenges, ["create", "--file", "{}/test_zip_file.zip".format(file), "4"])
         assert result.exit_code == 1
 
     @responses.activate
