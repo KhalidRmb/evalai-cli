@@ -319,19 +319,21 @@ class TestHTTPErrorRequests(BaseTestClass):
         expected = self.expected.format(url)
         assert response == expected
 
+
 class TestCreateChallengeWhenZipFileDoesNotExist(BaseTestClass):
     def setup(self):
 
-        message = ("The zip file contents cannot be extracted. Please check the format!")
-        response_data = {
-            "error": message
+        response_data = """
+        {
+            "error": "The zip file contents cannot be extracted. Please check the format!"
         }
+        """
         error_data = json.loads(response_data)
         url = "{}{}"
         responses.add(
             responses.POST,
             url.format(API_HOST_URL, URLS.create_challenge.value).format("4"),
-            json=self.error_data,
+            json=error_data,
             status=406,
         )
 
