@@ -352,7 +352,6 @@ class TestCreateChallengeWhenZipFileDoesNotExist(BaseTestClass):
                 f.write("1 2 3 4 5 6")
 
             result = runner.invoke(
-                challenge,
                 challenges, ["create", "--file", "test_file.txt", "4"],
             )
 
