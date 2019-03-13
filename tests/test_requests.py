@@ -319,6 +319,43 @@ class TestHTTPErrorRequests(BaseTestClass):
         expected = self.expected.format(url)
         assert response == expected
 
+class TestCreateChallengeWhenZipFileDoesNotExist(BaseTestClass):
+    def setup(self):
+
+        message = ("The zip file contents cannot be extracted. Please check the format!")
+        response_data = {
+            "error": message
+        }
+        error_data = json.loads(response_data)
+        url = "{}{}"
+        responses.add(
+            responses.POST,
+            url.format(API_HOST_URL, URLS.create_challenge.value).format("4"),
+            json=self.error_data,
+            status=406,
+        )
+
+    @responses.activate
+    def test_create_challenge_when_zip_file_does_not_exist(self):
+
+        expected = ("\nError: The zip file contents cannot be extracted. Please check the format!\n"
+                    "\nUse `evalai challenges` to fetch the active challenges.\n"
+                    "\nUse `evalai challenge CHALLENGE phases` to fetch the "
+                    "active phases.\n"
+                    )
+        runner = CliRunner()
+
+        with runner.isolated_filesystem():
+            with open("test_file.txt", "w") as f:
+                f.write("1 2 3 4 5 6")
+
+            result = runner.invoke(
+                challenge,
+                challenges, ["create", "--file", "test_file.txt", "4"],
+            )
+
+            assert result.output == expected
+
 
 class TestSubmissionDetailsWhenObjectDoesNotExist(BaseTestClass):
     def setup(self):

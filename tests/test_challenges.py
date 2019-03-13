@@ -1013,3 +1013,17 @@ class TestCreateChallenge(BaseTestClass):
             challenges, ["create", "--file", "{}/test_zip_file.zip".format(file), "4"]
         )
         assert result.output.strip() == expected
+
+    @responses.activate
+    def test_create_challenge_when_id_is_not_valid(self):
+        expected = ("404 Client Error: Not Found for url: http://localhost:8000/api/challenges/challenge/challenge_host_team/111/zip_upload/")
+
+        runner = CliRunner()
+
+        my_path = os.path.abspath(os.path.dirname(__file__))
+        file = os.path.join(my_path, "data")
+
+        result = runner.invoke(
+            challenges, ["create", "--file", "{}/test_zip_file.zip".format(file), "111"]
+        )
+        assert result.output.strip() == expected
