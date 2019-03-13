@@ -633,6 +633,12 @@ class TestRequestForExceptions(BaseTestClass):
         # Challenge URLS
 
         responses.add(
+            responses.POST,
+            url.format(API_HOST_URL, URLS.create_challenge.value),
+            body=RequestException("..."),
+            )
+
+        responses.add(
             responses.GET,
             url.format(API_HOST_URL, URLS.challenge_list.value),
             body=RequestException("..."),
@@ -758,6 +764,14 @@ class TestRequestForExceptions(BaseTestClass):
             url.format(API_HOST_URL, URLS.leaderboard.value).format("1"),
             body=RequestException("..."),
         )
+
+    @responses.activate
+    def test_create_challenge_for_request_exception(self):
+        runner = CliRunner()
+        my_path = os.path.abspath(os.path.dirname(__file__))
+        file = os.path.join(my_path, "data")
+        result = runner.invoke(challenges, ["create", "--file", "{}/test_zip_file.zip", "4"])
+        assert result.exit_code == 1
 
     @responses.activate
     def test_display_challenge_list_for_request_exception(self):
